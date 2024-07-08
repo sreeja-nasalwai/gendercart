@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +13,7 @@ const SignUpComponent = () => {
     const [username, setUsername] = useState('');
     const [mobileNumber, setMobileNumber] = useState('');
     const [passwordStrength, setPasswordStrength] = useState('');
+    const [gender, setGender] = useState('male'); // Default category value
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -42,6 +44,7 @@ const SignUpComponent = () => {
                 password,
                 username,
                 mobileNumber,
+                gender, // Include category in the request
             });
 
             if (response.data.message === 'User already exists') {
@@ -123,6 +126,13 @@ const SignUpComponent = () => {
                                 </FloatingLabel>
                                 <FloatingLabel label="Mobile Number :" className="mb-3">
                                     <input type="text" id="mobileNumber" className="form-control" placeholder="Enter your phone number" required onChange={handleMobileNumberChange} value={mobileNumber} />
+                                </FloatingLabel>
+                                <FloatingLabel label="Category :" className="mb-3">
+                                    <select className="form-control" onChange={(e) => setGender(e.target.value)} value={gender}>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="kids">Kids</option>
+                                    </select>
                                 </FloatingLabel>
                                 <div className="mb-3 form-check">
                                     <input type="checkbox" className="form-check-input" id="agreeCheckbox" required />

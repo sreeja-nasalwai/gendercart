@@ -1,43 +1,44 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../Provider/AuthProvider';
 import { Container, Row, Col, Card, CardHeader, CardBody } from 'react-bootstrap';
 import '../HomeOrderComponent.css';
 
 const HomeOrderComponent = () => {
-  const { productId } = useAuth();
-  const [product, setProduct] = useState({});
-  const [tprice, setTotal] = useState(0);
-  const [date,setDate]=useState();
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+    const { productId } = useAuth();
+    const [product, setProduct] = useState({});
+    const [tprice, setTotal] = useState(0);
+    const [date, setDate] = useState('');
+    const [gender, setGender] = useState('');
 
-  const fetchOrders = async () => {
-    try {
-      console.log(productId);
-      const response = await axios.get(`http://localhost:3002/home/order/${productId}`);
-      console.log(typeof(response.data));
-      setProduct(response.data);
-      setTotal(response.data.price);
-      const now=new Date();
-     const formattedDate=now.toLocaleString();
-     setDate(formattedDate);
-      console.log(product);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    useEffect(() => {
+        fetchOrders();
+    }, []);
 
-  return (
-    <div>
-       <section className="h-100 gradient-custom">
-            <CardHeader className="px-4 py-5">
-                                    <h5 className="text-muted mb-0">Thanks for your Order,</h5>
-             </CardHeader>
-            <Container className="py-5 h-100">
-                <Row className="d-flex justify-content-center align-items-center h-100">
-                    <Col lg={10} xl={8}>
+    const fetchOrders = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3002/home/order/${productId}`);
+            setProduct(response.data);
+            setTotal(response.data.price);
+            const now = new Date();
+            const formattedDate = now.toLocaleString();
+            setDate(formattedDate);
+            setGender(response.data.gender); // Assuming gender is fetched from the API
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    return (
+        <div>
+            <section className="h-100 gradient-custom">
+                <CardHeader className="px-4 py-5">
+                    <h5 className="text-muted mb-0">Thanks for your Order,</h5>
+                
+                </CardHeader>
+                <Container className="py-5 h-100">
+                    <Row className="d-flex justify-content-center align-items-center h-100">
+                        <Col lg={10} xl={8}>
                             <Card key={product._id} style={{ borderRadius: '10px', marginBottom: '20px' }}>
                                 <CardBody className="p-4">
                                     <div className="d-flex justify-content-between align-items-center mb-4">
@@ -61,7 +62,12 @@ const HomeOrderComponent = () => {
                                                 <Col md={2} className="text-center d-flex justify-content-center align-items-center">
                                                     <p className="text-muted mb-0 small">Date: {date}</p>
                                                 </Col>
-                                            </Row>
+                                           
+                                                    <Col md={2} className="text-center d-flex justify-content-center align-items-center">
+                                                        <p className="text-muted mb-0 small">Gender: {gender}</p>
+                                                    </Col>
+                                                </Row>
+                                          
                                             <hr className="mb-4" style={{ backgroundColor: '#e0e0e0', opacity: 1 }} />
                                             <div className="row d-flex align-items-center">
                                                 <div className="d-flex justify-content-between pt-2">
@@ -77,22 +83,21 @@ const HomeOrderComponent = () => {
                                     </Card>
                                 </CardBody>
                             </Card>
+                        </Col>
+                    </Row>
+                </Container>
+                <Row className="d-flex justify-content-center align-items-center h-100">
+                    <Col lg={10} xl={8}>
+                        <Card className="border-0 px-4 py-5" style={{ backgroundColor: 'purple', borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}>
+                            <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+                                Total Paid: <span className="h2 mb-0 ms-2">Rs.{tprice}</span>
+                            </h5>
+                        </Card>
                     </Col>
                 </Row>
-            </Container>
-             <Row className="d-flex justify-content-center align-items-center h-100">
-            <Col lg={10} xl={8}>
-            <Card className="border-0 px-4 py-5" style={{ backgroundColor: 'purple', borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}>
-                                    <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
-                                        Total Paid: <span className="h2 mb-0 ms-2">Rs.{tprice}</span>
-                                    </h5>
-            </Card>
-            </Col>
-            </Row>
-        </section> 
-
-    </div>
-  );
+            </section>
+        </div>
+    );
 };
 
 export default HomeOrderComponent;

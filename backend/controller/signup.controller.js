@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 // User registration handler
 async function saveUser(req, res) {
     try {
-        const { email, password, username, mobileNumber } = req.body;
+        const { email, password, username, mobileNumber ,gender } = req.body;
 
         // Check if user already exists
         const existingUser = await signModel.findOne({
@@ -14,6 +14,7 @@ async function saveUser(req, res) {
                 { username },
                 { email },
                 { mobileNumber }
+                
             ],
         });
 
@@ -35,6 +36,7 @@ async function saveUser(req, res) {
             password: hashedPassword,
             username,
             mobileNumber,
+            gender,
             role // Assign the determined role
         });
 
@@ -129,7 +131,7 @@ async function deleteAcc(req,res){
 async function updateUserProfile(req, res) {
     try {
         const {id }=req.params;
-        const { username, email, mobileNumber } = req.body;
+        const { username, email, mobileNumber ,gender} = req.body;
         const user = await signModel.findById(id);
 
         if (!user) {
@@ -140,6 +142,7 @@ async function updateUserProfile(req, res) {
         user.username = username;
         user.email = email;
         user.mobileNumber = mobileNumber;
+        user.gender=gender;
 
         await user.save();
 

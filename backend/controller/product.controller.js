@@ -28,6 +28,7 @@ async function addToCart(req, res) {
                 productId,
                 productName: product.productName,
                 quantity,
+                gender,
                 price:product.price
             });
         }
@@ -41,9 +42,9 @@ async function addToCart(req, res) {
 }
 async function postProduct(req,res){
     try{
-    const {productId,imageUrl,productName,price,color,type,description,quantity}=req.body;
+    const {productId,imageUrl,productName,price,color,gender,type,description,quantity}=req.body;
     const product=await productmodel.create({
-        _id:productId,imageUrl,productName,price,color,type,description,quantity
+        _id:productId,imageUrl,productName,price,color,gender,type,description,quantity
     });
     res.status(200).json(product);
 }

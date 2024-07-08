@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap';
 
 const ProfileComponent = () => {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ const ProfileComponent = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
+  const [gender, setGender] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -25,6 +26,7 @@ const ProfileComponent = () => {
         setUsername(userData.username);
         setEmail(userData.email);
         setMobileNumber(userData.mobileNumber);
+        setGender(userData.gender);
         setLoading(false);
       } catch (error) {
         setError('Error fetching user data');
@@ -77,6 +79,7 @@ const ProfileComponent = () => {
         username,
         email,
         mobileNumber,
+        gender,
       });
 
       setUser(response.data.user);
@@ -105,8 +108,8 @@ const ProfileComponent = () => {
                   <div className="mt-3">
                     <h4>{user.username}</h4>
                     <p className="text-secondary mb-1">Full Stack Developer</p>
-                    <Button variant="none" className="button"  onClick={handleCartClick} style={{color:'purple'}}>Cart</Button>
-                    <Button variant='none' className="button" onClick={handleOrderClick} style={{color:'purple'}}>My Orders</Button><br/><br/>
+                    <Button variant="none" className="button" onClick={handleCartClick} style={{ color: 'purple' }}>Cart</Button>
+                    <Button variant="none" className="button" onClick={handleOrderClick} style={{ color: 'purple' }}>My Orders</Button><br /><br />
                     <Button className='btn btn-danger' onClick={handleProfileDelete}>Delete Account</Button>
                   </div>
                 </div>
@@ -146,8 +149,17 @@ const ProfileComponent = () => {
                     </div>
                     <hr />
                     <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Gender</h6>
+                      </div>
+                      <div className="col-sm-9 text-secondary">
+                        {user.gender}
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="row">
                       <div className="col-sm-12">
-                        <Button variant='none' className="button" onClick={handleEditToggle} style={{color:'purple'}}>Edit</Button>
+                        <Button variant='none' className="button" onClick={handleEditToggle} style={{ color: 'purple' }}>Edit</Button>
                       </div>
                     </div>
                   </>
@@ -158,9 +170,9 @@ const ProfileComponent = () => {
                         <h6 className="mb-0">UserName</h6>
                       </div>
                       <div className="col-sm-9 text-secondary">
-                        <input 
-                          type="text" 
-                          className="form-control" 
+                        <input
+                          type="text"
+                          className="form-control"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
                         />
@@ -172,9 +184,9 @@ const ProfileComponent = () => {
                         <h6 className="mb-0">Email</h6>
                       </div>
                       <div className="col-sm-9 text-secondary">
-                        <input 
-                          type="email" 
-                          className="form-control" 
+                        <input
+                          type="email"
+                          className="form-control"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
@@ -186,12 +198,29 @@ const ProfileComponent = () => {
                         <h6 className="mb-0">Mobile</h6>
                       </div>
                       <div className="col-sm-9 text-secondary">
-                        <input 
-                          type="text" 
-                          className="form-control" 
+                        <input
+                          type="text"
+                          className="form-control"
                           value={mobileNumber}
                           onChange={(e) => setMobileNumber(e.target.value)}
                         />
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Gender</h6>
+                      </div>
+                      <div className="col-sm-9 text-secondary">
+                        <select
+                          className="form-control"
+                          value={gender}
+                          onChange={(e) => setGender(e.target.value)}
+                        >
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="kids">Kids</option>
+                        </select>
                       </div>
                     </div>
                     <hr />

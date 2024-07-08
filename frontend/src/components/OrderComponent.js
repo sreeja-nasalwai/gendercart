@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import '../OrderComponent.css'
+import '../OrderComponent.css';
+
 function OrderComponent() {
   const [orders, setOrders] = useState([]);
   const [isOrderEmpty, setIsOrderEmpty] = useState(false);
@@ -72,16 +73,19 @@ function OrderComponent() {
                           <Col md={2} className="text-center d-flex justify-content-center align-items-center">
                             <p className="text-muted mb-0 small">Product Price: ${order.price / order.quantity}</p>
                           </Col>
+                          <Col md={2} className="text-center d-flex justify-content-center align-items-center">
+                            <p className="text-muted mb-0 small">Gender: {order.gender}</p>
+                          </Col>
                         </Row>
                         <hr style={{ backgroundColor: '#e0e0e0', opacity: 1, margin: '20px 0' }} />
                         <div className="row d-flex align-items-center">
                           <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '10px' }}>
-                            <p className="fw-bold mb-0"style={{color:'#BA68C8'}}>Order Details</p>
-                            <p className="text-muted mb-0"><span className="fw-bold me-4"style={{color:'#BA68C8'}}>Total</span>${order.price}</p>
+                            <p className="fw-bold mb-0">Order Details</p>
+                            <p className="text-muted mb-0"><span className="fw-bold me-4">Total</span>${order.price}</p>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
                             <p className="text-muted mb-0">Receipt Voucher: {order.id}</p>
-                            <p className="text-muted mb-0"><span className="fw-bold me-4" style={{color:'#BA68C8'}}>Delivery Charges</span> Free</p>
+                            <p className="text-muted mb-0"><span className="fw-bold me-4">Delivery Charges</span> Free</p>
                           </div>
                         </div>
                       </Card.Body>
@@ -98,4 +102,3 @@ function OrderComponent() {
 }
 
 export default OrderComponent;
-

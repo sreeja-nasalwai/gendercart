@@ -1,4 +1,4 @@
-.menu-trigger img{
+/* .menu-trigger img{
   position: absolute;
   top: 20px;
   right: 20px;
@@ -44,4 +44,56 @@
   transform: translateY(-20px);
   transition: var(--speed) ease;
 }
+ */
+ :root {
+  --border-radius: 10px; /* Define this variable or adjust accordingly */
+  --secondary-bg: #fff;  /* Adjust to match your theme */
+  --speed: 0.3s;         /* Transition speed */
+}
+ .menu-trigger img {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #fff;
+}
 
+.dropdown-menu {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  width: 200px;
+  z-index: 9999; /* Ensure it appears above other elements */
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 20px;
+  height: 20px;
+  width: 20px;
+  background: var(--secondary-bg);
+  transform: rotate(45deg);
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
+}
+
+.dropdown-menu.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
+}
